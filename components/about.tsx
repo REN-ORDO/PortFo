@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Brain, Code2, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
 import { stats } from "@/lib/data";
+import { TiltCard } from "@/components/tilt-card";
 
 type Pillar = {
   id: string;
@@ -96,52 +97,52 @@ export function About() {
 
         <div className="mt-20 grid gap-4 md:grid-cols-3">
           {pillars.map((pillar, i) => (
-            <motion.article
+            <motion.div
               key={pillar.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative overflow-hidden rounded-3xl border border-[--color-border] bg-[--color-surface]/40 p-8 backdrop-blur-sm transition-all duration-500 hover:border-[--color-border-strong] hover:bg-[--color-surface]"
             >
-              <div
-                aria-hidden
-                className="absolute -top-24 -right-24 h-48 w-48 rounded-full opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-30"
-                style={{ background: pillar.accent }}
-              />
+              <TiltCard
+                accent={pillar.accent}
+                lift={6}
+                intensity="medium"
+                className="overflow-hidden rounded-3xl border border-[--color-border] bg-[--color-surface]/40 p-8 backdrop-blur-sm transition-[border-color] duration-500 hover:border-[--color-border-strong]"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[--color-border] bg-[--color-bg-elev]">
+                  <span style={{ color: pillar.accent }}>{pillar.icon}</span>
+                </div>
 
-              <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-[--color-border] bg-[--color-bg-elev]">
-                <span style={{ color: pillar.accent }}>{pillar.icon}</span>
-              </div>
+                <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-[--color-fg-subtle]">
+                  {pillar.label}
+                </p>
 
-              <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-[--color-fg-subtle]">
-                {pillar.label}
-              </p>
+                <h3 className="mt-3 text-balance text-2xl font-semibold leading-tight tracking-tight">
+                  {pillar.title}
+                </h3>
 
-              <h3 className="mt-3 text-balance text-2xl font-semibold leading-tight tracking-tight">
-                {pillar.title}
-              </h3>
+                <p className="mt-4 text-sm leading-relaxed text-[--color-fg-muted]">
+                  {pillar.description}
+                </p>
 
-              <p className="mt-4 text-sm leading-relaxed text-[--color-fg-muted]">
-                {pillar.description}
-              </p>
-
-              <ul className="mt-6 flex flex-col gap-2">
-                {pillar.bullets.map((b) => (
-                  <li
-                    key={b}
-                    className="flex items-center gap-2 text-sm text-[--color-fg-muted]"
-                  >
-                    <span
-                      aria-hidden
-                      className="inline-block h-1 w-3 rounded-full"
-                      style={{ background: pillar.accent }}
-                    />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-            </motion.article>
+                <ul className="mt-6 flex flex-col gap-2">
+                  {pillar.bullets.map((b) => (
+                    <li
+                      key={b}
+                      className="flex items-center gap-2 text-sm text-[--color-fg-muted]"
+                    >
+                      <span
+                        aria-hidden
+                        className="inline-block h-1 w-3 rounded-full"
+                        style={{ background: pillar.accent }}
+                      />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </TiltCard>
+            </motion.div>
           ))}
         </div>
 
@@ -179,13 +180,17 @@ function SectionLabel({ index, label }: { index: string; label: string }) {
 
 function Stat({ number, label }: { number: string; label: string }) {
   return (
-    <div className="bg-[--color-bg] p-8">
-      <div className="font-display text-4xl tracking-tight text-[--color-fg] md:text-5xl">
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 320, damping: 22 }}
+      className="group bg-[--color-bg] p-8 transition-colors duration-500 hover:bg-[--color-bg-elev]/50"
+    >
+      <div className="font-display text-4xl tracking-tight text-[--color-fg] transition-colors duration-500 group-hover:text-[--color-accent] md:text-5xl">
         {number}
       </div>
       <div className="mt-2 text-xs uppercase tracking-[0.15em] text-[--color-fg-subtle]">
         {label}
       </div>
-    </div>
+    </motion.div>
   );
 }

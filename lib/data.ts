@@ -10,6 +10,9 @@ export type Project = {
   year: string;
   link?: string;
   repo?: string;
+  icon?: string;
+  iconSize?: "sm" | "md" | "lg";
+  wordmark?: { primary: string; secondary?: string };
   highlights: string[];
   accent: "mint" | "violet" | "warm" | "rose";
 };
@@ -18,6 +21,7 @@ export const projects: Project[] = [
   {
     id: "derbiplay",
     title: "DerbiPlay",
+    icon: "/icon-derbiplay.png",
     tagline: "El futuro del fútbol amateur",
     description:
       "Plataforma del fútbol amateur: torneos abiertos, gestión de equipos, estadísticas computadas, pagos vía Nequi, cromos generativos con IA (DerbiCard) y bot de WhatsApp que sincroniza la comunidad. Arquitectura híbrida Supabase + Firebase con bridges seguros entre ambos.",
@@ -49,6 +53,7 @@ export const projects: Project[] = [
   {
     id: "dailyhumano",
     title: "DailyHumano",
+    icon: "/icon-dailyhumano.png",
     tagline: "PWA con IA conversacional y voz",
     description:
       "Producto digital construido como PWA. Interfaz con IA (Gemini), transcripción por voz (Whisper), jobs en background con BullMQ + Redis y persistencia en Supabase. UI con Radix + shadcn helpers, charts con Recharts y drag-and-drop con dnd-kit.",
@@ -78,7 +83,9 @@ export const projects: Project[] = [
   },
   {
     id: "avanzo",
-    title: "Avanzo",
+    title: "Avanzo Créditos",
+    icon: "/icon-avanzo.png",
+    wordmark: { primary: "Avanzo", secondary: "Créditos" },
     tagline: "QA manual sobre 4 entornos",
     description:
       "QA sobre 4 entornos (DEV · QA · REG · PROD) con filosofía manual-first. Tracker HTML custom con persistencia localStorage, smoke script Python stdlib para health-check pre-test, y reportes ejecutivos go/no-go con evidencia para stakeholders.",
@@ -94,6 +101,7 @@ export const projects: Project[] = [
     ],
     status: "produccion",
     year: "2026",
+    link: "https://avanzo.co/",
     highlights: [
       "Tracker HTML propio con persistencia local + export JSON",
       "Smoke script Python sin dependencias para validar env pre-test",
@@ -128,6 +136,8 @@ export const projects: Project[] = [
   {
     id: "vialink",
     title: "ViaLink",
+    icon: "/icon-vialink.svg",
+    iconSize: "sm",
     tagline: "Rutas de transporte público en tiempo real",
     description:
       "Aplicación para seguir buses de transporte público en tiempo real. Mapas interactivos, WebSocket para posición en vivo, estado optimizado con Zustand y micro-animaciones para feedback. Hackathon Barranqui IA 2026.",
@@ -145,7 +155,7 @@ export const projects: Project[] = [
       "Framer Motion",
     ],
     status: "archivado",
-    year: "2025",
+    year: "2026",
     highlights: [
       "Frontend Lead — arquitectura del cliente completo",
       "Posición de buses en tiempo real vía WebSocket",
@@ -230,6 +240,8 @@ export const skills: Skill[] = [
 export type Experience = {
   role: string;
   company: string;
+  companyLogo?: string;
+  companyLink?: string;
   period: string;
   description: string;
   achievements: string[];
@@ -239,13 +251,15 @@ export const experiences: Experience[] = [
   {
     role: "Full Stack & QA Engineer",
     company: "Cooweb.co",
+    companyLogo: "/logo-cooweb.png",
+    companyLink: "https://cooweb.co",
     period: "Dic 2025 — presente",
     description:
       "Trabajo en múltiples productos de la empresa con roles que se adaptan al equipo de cada uno: Full Stack en DerbiPlay y DailyHumano, QA Engineer en Avanzo.",
     achievements: [
       "DerbiPlay (Full Stack): plataforma de fútbol amateur en producción",
       "DailyHumano (Full Stack): PWA con IA conversacional y voz",
-      "Avanzo (QA): QA manual sobre 4 entornos con tooling propio",
+      "Avanzo Créditos (QA): QA manual sobre 4 entornos con tooling propio",
       "Cava (QA): cobertura de calidad sobre producto live",
     ],
   },

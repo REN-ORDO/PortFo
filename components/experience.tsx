@@ -1,7 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { experiences, skills } from "@/lib/data";
+import { TiltCard } from "@/components/tilt-card";
+
+const skillAccents = [
+  "var(--color-accent)",
+  "var(--color-accent-2)",
+  "var(--color-accent-warm)",
+  "var(--color-accent-rose)",
+];
 
 export function Experience() {
   return (
@@ -59,9 +68,33 @@ export function Experience() {
                   <h4 className="mt-2 text-xl font-semibold tracking-tight">
                     {exp.role}
                   </h4>
-                  <p className="text-sm font-display italic text-[--color-fg-muted]">
-                    {exp.company}
-                  </p>
+                  <div className="mt-1 flex items-center gap-2.5">
+                    {exp.companyLogo && (
+                      <span className="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-1 ring-1 ring-[--color-border]">
+                        <Image
+                          src={exp.companyLogo}
+                          alt={`${exp.company} logo`}
+                          width={64}
+                          height={64}
+                          className="h-full w-full object-contain"
+                        />
+                      </span>
+                    )}
+                    {exp.companyLink ? (
+                      <a
+                        href={exp.companyLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm font-display italic text-[--color-fg-muted] underline-offset-4 transition-colors hover:text-[--color-fg] hover:underline"
+                      >
+                        {exp.company}
+                      </a>
+                    ) : (
+                      <p className="text-sm font-display italic text-[--color-fg-muted]">
+                        {exp.company}
+                      </p>
+                    )}
+                  </div>
                   <p className="mt-3 text-sm leading-relaxed text-[--color-fg-muted]">
                     {exp.description}
                   </p>
@@ -86,35 +119,66 @@ export function Experience() {
               Stack & habilidades
             </h3>
             <div className="mt-8 flex flex-col gap-3">
-              {skills.map((skill, i) => (
-                <motion.div
-                  key={skill.category}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="group rounded-2xl border border-[--color-border] bg-[--color-surface]/30 p-6 backdrop-blur-sm transition-colors hover:border-[--color-border-strong] hover:bg-[--color-surface]"
-                >
-                  <div className="flex items-baseline justify-between">
-                    <h4 className="text-base font-semibold tracking-tight">
-                      {skill.category}
-                    </h4>
-                    <span className="font-mono text-[10px] text-[--color-fg-subtle]">
-                      0{i + 1}
-                    </span>
-                  </div>
-                  <div className="mt-4 flex flex-wrap gap-1.5">
-                    {skill.items.map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-full border border-[--color-border] bg-[--color-bg-elev]/50 px-3 py-1 text-xs text-[--color-fg-muted] transition-all duration-300 hover:border-[--color-accent]/50 hover:text-[--color-fg]"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
+              {skills.map((skill, i) => {
+                const accent = skillAccents[i % skillAccents.length];
+                return (
+                  <motion.div
+                    key={skill.category}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, delay: i * 0.08 }}
+                  >
+                    <TiltCard
+                      accent={accent}
+                      lift={4}
+                      intensity="low"
+                      className="rounded-2xl border border-[--color-border] bg-[--color-surface]/30 p-6 backdrop-blur-sm transition-[border-color] duration-500 hover:border-[--color-border-strong]"
+                    >
+                      <div className="flex items-baseline justify-between">
+                        <h4 className="text-base font-semibold tracking-tight">
+                          {skill.category}
+                        </h4>
+                        <span
+                          className="font-mono text-[10px]"
+                          style={{ color: accent }}
+                        >
+                          0{i + 1}
+                        </span>
+                      </div>
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {skill.items.map((item) => (
+                          <motion.span
+                            key={item}
+                            whileHover={{ y: -3, scale: 1.06 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 380,
+                              damping: 22,
+                            }}
+                            className="inline-block cursor-default rounded-full border border-[--color-border] bg-[--color-bg-elev]/50 px-3 py-1 text-xs text-[--color-fg-muted] transition-colors duration-300 hover:text-[--color-fg]"
+                            style={
+                              {
+                                "--hover-accent": accent,
+                              } as React.CSSProperties
+                            }
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.borderColor = `${accent}80`;
+                              e.currentTarget.style.boxShadow = `0 8px 20px -10px ${accent}66`;
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.borderColor = "";
+                              e.currentTarget.style.boxShadow = "";
+                            }}
+                          >
+                            {item}
+                          </motion.span>
+                        ))}
+                      </div>
+                    </TiltCard>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>

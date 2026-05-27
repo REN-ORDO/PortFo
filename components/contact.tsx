@@ -8,9 +8,24 @@ import { GithubIcon, LinkedinIcon } from "@/components/brand-icons";
 const EMAIL = "sebastianordonezgonzalez@gmail.com";
 
 const socials = [
-  { href: `mailto:${EMAIL}`, icon: <Mail size={16} />, label: "Email" },
-  { href: "https://github.com/REN-ORDO", icon: <GithubIcon />, label: "GitHub · REN-ORDO" },
-  { href: "#", icon: <LinkedinIcon />, label: "LinkedIn · próximamente" },
+  {
+    href: `mailto:${EMAIL}`,
+    icon: <Mail size={16} />,
+    label: "Email",
+    accent: "var(--color-accent)",
+  },
+  {
+    href: "https://github.com/REN-ORDO",
+    icon: <GithubIcon />,
+    label: "GitHub · REN-ORDO",
+    accent: "var(--color-accent-2)",
+  },
+  {
+    href: "#",
+    icon: <LinkedinIcon />,
+    label: "LinkedIn · próximamente",
+    accent: "var(--color-accent-warm)",
+  },
 ];
 
 export function Contact() {
@@ -119,27 +134,52 @@ export function Contact() {
               <ul className="flex flex-col gap-2">
                 {socials.map((s) => (
                   <li key={s.label}>
-                    <a
+                    <motion.a
                       href={s.href}
                       target={s.href.startsWith("http") ? "_blank" : undefined}
                       rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="group flex items-center justify-between rounded-2xl border border-[--color-border] bg-[--color-bg-elev]/40 px-5 py-4 transition-all duration-300 hover:border-[--color-border-strong] hover:bg-[--color-bg-elev]"
+                      whileHover={{ y: -3 }}
+                      transition={{ type: "spring", stiffness: 320, damping: 22 }}
+                      className="group flex items-center justify-between rounded-2xl border border-[--color-border] bg-[--color-bg-elev]/40 px-5 py-4 transition-colors duration-300 hover:bg-[--color-bg-elev]"
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = `${s.accent}80`;
+                        e.currentTarget.style.boxShadow = `0 14px 30px -14px ${s.accent}55`;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = "";
+                        e.currentTarget.style.boxShadow = "";
+                      }}
                     >
                       <span className="flex items-center gap-3 text-sm">
-                        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[--color-border] bg-[--color-surface] text-[--color-fg-muted] transition-colors group-hover:border-[--color-accent]/50 group-hover:text-[--color-accent]">
-                          {s.icon}
+                        <span
+                          className="flex h-8 w-8 items-center justify-center rounded-full border border-[--color-border] bg-[--color-surface] text-[--color-fg-muted] transition-colors"
+                          style={{ color: undefined }}
+                        >
+                          <span
+                            className="flex items-center justify-center transition-colors duration-300 group-hover:text-[var(--accent)]"
+                            style={{ "--accent": s.accent } as React.CSSProperties}
+                          >
+                            {s.icon}
+                          </span>
                         </span>
                         {s.label}
                       </span>
-                      <span className="text-[--color-fg-subtle] transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-[--color-fg]">
+                      <span
+                        className="transition-all duration-300 group-hover:translate-x-1"
+                        style={{ color: s.accent }}
+                      >
                         ↗
                       </span>
-                    </a>
+                    </motion.a>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-4 rounded-2xl border border-[--color-border] bg-[--color-bg-elev]/40 px-5 py-4">
+              <motion.div
+                whileHover={{ y: -3 }}
+                transition={{ type: "spring", stiffness: 320, damping: 22 }}
+                className="mt-4 rounded-2xl border border-[--color-border] bg-[--color-bg-elev]/40 px-5 py-4 transition-colors duration-300 hover:border-[--color-border-strong] hover:bg-[--color-bg-elev]"
+              >
                 <div className="flex items-center gap-2 text-xs">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inset-0 animate-ping rounded-full bg-[--color-accent] opacity-75" />
@@ -149,7 +189,7 @@ export function Contact() {
                     Tiempo de respuesta · 24h
                   </span>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </motion.div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import {
   AnimatePresence,
@@ -9,7 +9,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check, ChevronDown } from "lucide-react";
 import { GithubIcon } from "@/components/brand-icons";
 import { projects, type Project } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -80,37 +80,12 @@ export function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex max-w-full flex-wrap items-center justify-start gap-1 rounded-2xl border border-[--color-border] bg-[--color-surface]/40 p-1 backdrop-blur-sm sm:flex-nowrap sm:rounded-full"
-            role="tablist"
-            aria-label="Filtrar proyectos"
           >
-            {filters.map((f) => {
-              const isActive = filter === f.id;
-              return (
-                <button
-                  key={f.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setFilter(f.id)}
-                  className={cn(
-                    "relative rounded-full px-4 py-1.5 text-xs font-medium transition-colors active:scale-[0.97]",
-                    isActive
-                      ? "text-[--color-fg]"
-                      : "text-[--color-fg-muted] hover:text-[--color-fg]"
-                  )}
-                >
-                  {isActive && (
-                    <motion.span
-                      layoutId="filter-active"
-                      className="absolute inset-0 rounded-full bg-white/5"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative">{f.label}</span>
-                </button>
-              );
-            })}
+            <FilterDropdown
+              value={filter}
+              onChange={setFilter}
+              options={filters}
+            />
           </motion.div>
         </div>
 
@@ -137,6 +112,103 @@ export function Projects() {
         </motion.p>
       </div>
     </section>
+  );
+}
+
+function FilterDropdown({
+  value,
+  onChange,
+  options,
+}: {
+  value: Filter;
+  onChange: (v: Filter) => void;
+  options: { id: Filter; label: string }[];
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  const current = options.find((o) => o.id === value) ?? options[0];
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      if (!ref.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className="group flex items-center gap-2.5 rounded-full border border-[--color-border] bg-[--color-surface]/40 py-2 pl-4 pr-3 text-xs font-medium backdrop-blur-sm transition-colors hover:border-[--color-border-strong] hover:bg-[--color-surface]"
+      >
+        <span className="font-mono uppercase tracking-[0.15em] text-[--color-fg-subtle]">
+          Filtro
+        </span>
+        <span className="h-3 w-px bg-[--color-border]" />
+        <span className="text-[--color-fg]">{current.label}</span>
+        <motion.span
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center justify-center text-[--color-fg-muted]"
+        >
+          <ChevronDown size={14} />
+        </motion.span>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            role="listbox"
+            initial={{ opacity: 0, y: -6, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.97 }}
+            transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute right-0 z-30 mt-2 min-w-[180px] origin-top-right overflow-hidden rounded-2xl border border-[--color-border-strong] bg-[--color-bg-elev]/95 p-1 backdrop-blur-xl shadow-2xl"
+          >
+            {options.map((o) => {
+              const isActive = o.id === value;
+              return (
+                <li key={o.id}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={isActive}
+                    onClick={() => {
+                      onChange(o.id);
+                      setOpen(false);
+                    }}
+                    className={cn(
+                      "flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left text-sm transition-colors",
+                      isActive
+                        ? "bg-white/5 text-[--color-fg]"
+                        : "text-[--color-fg-muted] hover:bg-white/[0.03] hover:text-[--color-fg]"
+                    )}
+                  >
+                    <span>{o.label}</span>
+                    {isActive && (
+                      <Check size={14} className="text-[--color-accent]" />
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 

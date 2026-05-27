@@ -80,7 +80,7 @@ export function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex items-center gap-1 rounded-full border border-[--color-border] bg-[--color-surface]/40 p-1 backdrop-blur-sm"
+            className="flex max-w-full flex-wrap items-center justify-start gap-1 rounded-2xl border border-[--color-border] bg-[--color-surface]/40 p-1 backdrop-blur-sm sm:flex-nowrap sm:rounded-full"
             role="tablist"
             aria-label="Filtrar proyectos"
           >

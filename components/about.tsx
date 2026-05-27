@@ -95,7 +95,7 @@ export function About() {
           productos que se sientan bien usar.
         </motion.p>
 
-        <div className="mt-20 grid gap-4 md:grid-cols-3">
+        <div className="mt-20 grid gap-4 md:auto-rows-fr md:grid-cols-3">
           {pillars.map((pillar, i) => (
             <motion.div
               key={pillar.id}
@@ -103,12 +103,13 @@ export function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full"
             >
               <TiltCard
                 accent={pillar.accent}
                 lift={6}
                 intensity="medium"
-                className="overflow-hidden rounded-3xl border border-[--color-border] bg-[--color-surface]/40 p-8 backdrop-blur-sm transition-[border-color] duration-500 hover:border-[--color-border-strong]"
+                className="flex h-full flex-col overflow-hidden rounded-3xl border border-[--color-border] bg-[--color-surface]/40 p-8 backdrop-blur-sm transition-[border-color] duration-500 hover:border-[--color-border-strong]"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[--color-border] bg-[--color-bg-elev]">
                   <span style={{ color: pillar.accent }}>{pillar.icon}</span>
@@ -151,11 +152,20 @@ export function About() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-20 grid gap-px overflow-hidden rounded-3xl border border-[--color-border] bg-[--color-border] md:grid-cols-4"
+          className="mt-20"
         >
-          {stats.map((s) => (
-            <Stat key={s.label} number={s.number} label={s.label} />
-          ))}
+          <TiltCard
+            accent="var(--color-accent)"
+            intensity="low"
+            lift={0}
+            className="overflow-hidden rounded-3xl border border-[--color-border] bg-[--color-border]"
+          >
+            <div className="grid h-full w-full gap-px md:grid-cols-4">
+              {stats.map((s) => (
+                <Stat key={s.label} number={s.number} label={s.label} />
+              ))}
+            </div>
+          </TiltCard>
         </motion.div>
       </div>
     </section>

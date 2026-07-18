@@ -6,7 +6,7 @@ export type Project = {
   type: "empresa" | "hackathon" | "personal" | "open-source";
   role: string;
   stack: string[];
-  status: "produccion" | "beta" | "en-desarrollo" | "archivado";
+  status: "produccion" | "beta" | "en-desarrollo" | "archivado" | "rol-concluido";
   year: string;
   link?: string;
   repo?: string;
@@ -49,6 +49,37 @@ export const projects: Project[] = [
       "Server Actions + RLS + RPCs transaccionales para flujos críticos",
     ],
     accent: "mint",
+  },
+  {
+    id: "vecinos",
+    title: "VecinOS",
+    icon: "/icon-vecinos.png",
+    tagline: "Plataforma de gestión residencial",
+    description:
+      "Plataforma de gestión residencial (SaaS multi-tenant) desarrollada dentro de Cooweb.co. Módulos de portería con QR y escaneo de paquetes vía IA, gestión de incidencias/PQRS, comunicación con la comunidad y asistente de IA (Gemini) para normativa y clasificación automática de casos.",
+    type: "empresa",
+    role: "Tech Lead",
+    stack: [
+      "Next.js 14",
+      "React 18",
+      "TypeScript",
+      "Firebase",
+      "Redis",
+      "Gemini",
+      "Docker",
+      "Google Cloud Run",
+    ],
+    status: "produccion",
+    year: "2026",
+    link: "https://vecinos.club",
+    highlights: [
+      "Rol de Tech Lead liderando un equipo de desarrolladores junto a un compañero par",
+      "Módulos de portería (QR + escaneo de paquetes con IA)",
+      "Asistente de IA (Gemini) para normativa y clasificación automática de casos",
+      "CI/CD con Google Cloud Build hacia Cloud Run, contenedores Docker",
+      "PWA con soporte offline",
+    ],
+    accent: "rose",
   },
   {
     id: "dailyhumano",
@@ -99,7 +130,7 @@ export const projects: Project[] = [
       "Git",
       "Markdown + HTML Reports",
     ],
-    status: "produccion",
+    status: "rol-concluido",
     year: "2026",
     link: "https://avanzo.co/",
     highlights: [
@@ -124,7 +155,7 @@ export const projects: Project[] = [
       "Git",
       "Markdown Reports",
     ],
-    status: "produccion",
+    status: "rol-concluido",
     year: "2026",
     highlights: [
       "Cobertura happy path + edge cases por módulo",
@@ -200,10 +231,11 @@ export const skills: Skill[] = [
   {
     category: "AI Engineering",
     items: [
-      "LLMs (Claude)",
+      "LLMs (Claude, Gemini)",
       "RAG",
       "Agentes con Anthropic SDK",
       "Prompt engineering",
+      "Gestión de contexto y bases de conocimiento para multi-agentes",
     ],
   },
   {
@@ -223,7 +255,6 @@ export const skills: Skill[] = [
       "Supabase",
       "Firebase",
       "REST APIs",
-      "Integraciones (WhatsApp)",
     ],
   },
   {
@@ -233,6 +264,26 @@ export const skills: Skill[] = [
       "Vitest",
       "CI/CD con GitHub Actions",
       "Test data management",
+    ],
+  },
+  {
+    category: "Mobile",
+    items: ["React Native (en práctica)"],
+  },
+  {
+    category: "Cloud & DevOps",
+    items: [
+      "Docker",
+      "Google Cloud Run",
+      "Cloud Build (CI/CD)",
+      "Artifact Registry",
+    ],
+  },
+  {
+    category: "Liderazgo",
+    items: [
+      "Tech Lead / gestión de producto",
+      "Coordinación de equipos de desarrollo",
     ],
   },
 ];
@@ -249,19 +300,66 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
-    role: "Full Stack & QA Engineer",
+    role: "Tech Lead · Proyecto VecinOS",
+    company: "Cooweb.co",
+    companyLogo: "/logo-cooweb.png",
+    companyLink: "https://cooweb.co",
+    period: "Jun 2026 — presente",
+    description:
+      "Lidero, junto a un compañero par, a un equipo de desarrolladores en la construcción de VecinOS, plataforma de gestión residencial.",
+    achievements: [
+      "Dirección técnica de un equipo de desarrolladores",
+      "Arquitectura full stack: Next.js 14, Firebase, Redis",
+      "IA con Gemini para normativa y auto-asignación de incidencias",
+      "Infraestructura en Google Cloud: Docker, Cloud Run, Cloud Build",
+    ],
+  },
+  {
+    role: "Full Stack Developer",
     company: "Cooweb.co",
     companyLogo: "/logo-cooweb.png",
     companyLink: "https://cooweb.co",
     period: "Dic 2025 — presente",
-    description:
-      "Trabajo en múltiples productos de la empresa con roles que se adaptan al equipo de cada uno: Full Stack en DerbiPlay y DailyHumano, QA Engineer en Avanzo.",
+    description: "Desarrollo full stack en múltiples productos de la empresa.",
     achievements: [
-      "DerbiPlay (Full Stack): plataforma de fútbol amateur en producción",
-      "DailyHumano (Full Stack): PWA con IA conversacional y voz",
-      "Avanzo Créditos (QA): QA manual sobre 4 entornos con tooling propio",
-      "Cava (QA): cobertura de calidad sobre producto live",
+      "DerbiPlay: plataforma de fútbol amateur en producción",
+      "DailyHumano: PWA con IA conversacional y voz",
     ],
+  },
+  {
+    role: "QA Engineer (rol concluido)",
+    company: "Cooweb.co",
+    companyLogo: "/logo-cooweb.png",
+    companyLink: "https://cooweb.co",
+    period: "Dic 2025 — Jul 2026",
+    description:
+      "QA manual sobre productos en producción; cerré el ciclo capacitando a mi reemplazo antes de transicionar a desarrollo.",
+    achievements: [
+      "Avanzo Créditos: QA manual sobre 4 entornos con tooling propio",
+      "Cava: cobertura de calidad sobre producto en producción",
+    ],
+  },
+];
+
+export type Certification = {
+  title: string;
+  issuer: string;
+  date: string;
+  detail: string;
+};
+
+export const certifications: Certification[] = [
+  {
+    title: "Hackatón Barranqui-IA 2026 (3ª edición) — Build with AI",
+    issuer: "Google Developer Groups Barranquilla",
+    date: "Mayo 2026",
+    detail: "48 horas — certificado de participación",
+  },
+  {
+    title: "Hackatón Barranqui-IA 2025 (2ª edición) — Build with AI",
+    issuer: "Google Developer Groups Barranquilla",
+    date: "Mayo 2025",
+    detail: "48 horas — certificado de participación",
   },
 ];
 
@@ -271,9 +369,9 @@ export type Stat = {
 };
 
 export const stats: Stat[] = [
-  { number: "6 meses", label: "Experiencia profesional" },
-  { number: "4", label: "Proyectos en producción" },
-  { number: "3", label: "Disciplinas: AI · Frontend · QA" },
+  { number: "6+ meses", label: "Experiencia profesional" },
+  { number: "3", label: "Proyectos en producción activos" },
+  { number: "4", label: "Disciplinas: AI · Frontend · Cloud · Liderazgo" },
   { number: "0", label: "Bugs críticos en producción" },
 ];
 

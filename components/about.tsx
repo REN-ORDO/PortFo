@@ -24,7 +24,7 @@ const pillars: Pillar[] = [
     description:
       "Integro modelos en flujos reales: agentes con Anthropic SDK, voz con Whisper, contenido generativo con Gemini. Lo que importa es que el usuario sienta valor, no que el stack suene bien.",
     bullets: [
-      "Agentes con Anthropic Claude",
+      "Agentes con Anthropic Claude y Gemini",
       "Voz + multimodal (Gemini, Whisper)",
       "Provider abstractions para swap sin tocar UI",
     ],

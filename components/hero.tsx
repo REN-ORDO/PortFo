@@ -5,10 +5,10 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 
 const roles = [
-  { label: "AI Engineer", color: "var(--color-accent)" },
-  { label: "Frontend Specialist", color: "var(--color-accent-2)" },
-  { label: "QA Engineer", color: "var(--color-accent-warm)" },
-  { label: "Full-Stack Developer", color: "var(--color-accent-rose)" },
+  { label: "Full Stack Developer", color: "var(--color-accent)" },
+  { label: "Tech Lead", color: "var(--color-accent-2)" },
+  { label: "AI Engineer", color: "var(--color-accent-warm)" },
+  { label: "Cloud & DevOps", color: "var(--color-accent-rose)" },
 ];
 
 function RoleRotator() {
@@ -128,11 +128,12 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.7 }}
           className="mt-10 max-w-2xl text-lg leading-relaxed text-[--color-fg-muted] sm:text-xl"
         >
-          Llevo <span className="text-[--color-fg]">6 meses</span> construyendo
-          productos reales en <span className="text-[--color-fg]">Cooweb.co</span>.
-          Me muevo entre Full Stack, IA y QA según lo que pida el equipo. Me
-          obsesiona que cada pixel y cada interacción tengan intención — si el
-          usuario duda, fallé.
+          Llevo <span className="text-[--color-fg]">6+ meses</span> construyendo
+          productos reales en <span className="text-[--color-fg]">Cooweb.co</span>,
+          y desde hace un mes lidero como Tech Lead un equipo de desarrolladores
+          en VecinOS. Me muevo entre Full Stack, IA e infraestructura cloud
+          según lo que pida el equipo. Me obsesiona que cada pixel y cada
+          interacción tengan intención — si el usuario duda, fallé.
         </motion.p>
 
         <motion.div

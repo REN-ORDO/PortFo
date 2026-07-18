@@ -35,6 +35,7 @@ const statusLabel: Record<Project["status"], string> = {
   beta: "Beta",
   "en-desarrollo": "En desarrollo",
   archivado: "Archivado",
+  "rol-concluido": "Rol concluido · Jul 2026",
 };
 
 export function Projects() {

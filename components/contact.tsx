@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Copy, Mail, Check } from "lucide-react";
 import { useState } from "react";
 import { GithubIcon, LinkedinIcon } from "@/components/brand-icons";
+import { TiltCard } from "@/components/tilt-card";
 
 const EMAIL = "sebastianordonezgonzalez@gmail.com";
 
@@ -12,18 +13,21 @@ const socials = [
     href: `mailto:${EMAIL}`,
     icon: <Mail size={16} />,
     label: "Email",
+    cursor: "Enviar",
     accent: "var(--color-accent)",
   },
   {
     href: "https://github.com/REN-ORDO",
     icon: <GithubIcon />,
     label: "GitHub · REN-ORDO",
+    cursor: "Ver",
     accent: "var(--color-accent-2)",
   },
   {
-    href: "#",
+    href: "https://www.linkedin.com/in/sebastian-ordo%C3%B1ez-dev/",
     icon: <LinkedinIcon />,
-    label: "LinkedIn · próximamente",
+    label: "LinkedIn",
+    cursor: "Conectar",
     accent: "var(--color-accent-warm)",
   },
 ];
@@ -134,43 +138,38 @@ export function Contact() {
               <ul className="flex flex-col gap-2">
                 {socials.map((s) => (
                   <li key={s.label}>
-                    <motion.a
-                      href={s.href}
-                      target={s.href.startsWith("http") ? "_blank" : undefined}
-                      rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      whileHover={{ y: -3 }}
-                      transition={{ type: "spring", stiffness: 320, damping: 22 }}
-                      className="group flex items-center justify-between rounded-2xl border border-[--color-border] bg-[--color-bg-elev]/40 px-5 py-4 transition-colors duration-300 hover:bg-[--color-bg-elev]"
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = `${s.accent}80`;
-                        e.currentTarget.style.boxShadow = `0 14px 30px -14px ${s.accent}55`;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = "";
-                        e.currentTarget.style.boxShadow = "";
-                      }}
+                    <TiltCard
+                      accent={s.accent}
+                      lift={3}
+                      intensity="low"
+                      className="rounded-2xl border border-[--color-border] bg-[--color-bg-elev]/40 transition-colors duration-300 hover:border-[--color-border-strong]"
                     >
-                      <span className="flex items-center gap-3 text-sm">
-                        <span
-                          className="flex h-8 w-8 items-center justify-center rounded-full border border-[--color-border] bg-[--color-surface] text-[--color-fg-muted] transition-colors"
-                          style={{ color: undefined }}
-                        >
-                          <span
-                            className="flex items-center justify-center transition-colors duration-300 group-hover:text-[var(--accent)]"
-                            style={{ "--accent": s.accent } as React.CSSProperties}
-                          >
-                            {s.icon}
-                          </span>
-                        </span>
-                        {s.label}
-                      </span>
-                      <span
-                        className="transition-all duration-300 group-hover:translate-x-1"
-                        style={{ color: s.accent }}
+                      <a
+                        href={s.href}
+                        target={s.href.startsWith("http") ? "_blank" : undefined}
+                        rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        data-cursor={s.cursor}
+                        className="group flex items-center justify-between px-5 py-4"
                       >
-                        ↗
-                      </span>
-                    </motion.a>
+                        <span className="flex items-center gap-3 text-sm">
+                          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[--color-border] bg-[--color-surface] text-[--color-fg-muted] transition-colors">
+                            <span
+                              className="flex items-center justify-center transition-colors duration-300 group-hover:text-[var(--accent)]"
+                              style={{ "--accent": s.accent } as React.CSSProperties}
+                            >
+                              {s.icon}
+                            </span>
+                          </span>
+                          {s.label}
+                        </span>
+                        <span
+                          className="transition-all duration-300 group-hover:translate-x-1"
+                          style={{ color: s.accent }}
+                        >
+                          ↗
+                        </span>
+                      </a>
+                    </TiltCard>
                   </li>
                 ))}
               </ul>

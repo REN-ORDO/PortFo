@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { experiences, skills } from "@/lib/data";
+import { certifications, experiences, skills } from "@/lib/data";
 import { TiltCard } from "@/components/tilt-card";
 
 const skillAccents = [
@@ -112,6 +112,29 @@ export function Experience() {
                 </motion.li>
               ))}
             </ol>
+
+            <h3 className="mt-16 text-xs font-mono uppercase tracking-[0.2em] text-[--color-fg-subtle]">
+              Certificaciones & Hackathons
+            </h3>
+            <ul className="mt-8 flex flex-col gap-4">
+              {certifications.map((cert) => (
+                <li key={cert.title}>
+                  <TiltCard
+                    accent="var(--color-accent-2)"
+                    lift={4}
+                    intensity="low"
+                    className="rounded-2xl border border-[--color-border] bg-[--color-surface]/30 p-5 backdrop-blur-sm transition-[border-color] duration-500 hover:border-[--color-border-strong]"
+                  >
+                    <p className="text-sm font-semibold tracking-tight">
+                      {cert.title}
+                    </p>
+                    <p className="mt-1 text-xs text-[--color-fg-muted]">
+                      {cert.issuer} · {cert.date} — {cert.detail}
+                    </p>
+                  </TiltCard>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div>

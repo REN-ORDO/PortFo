@@ -15,6 +15,9 @@ const items = [
   "RAG",
   "TypeScript",
   "Next.js",
+  "Tech Lead",
+  "Cloud & DevOps",
+  "React Native",
 ];
 
 function Plus(props: SVGProps<SVGSVGElement>) {

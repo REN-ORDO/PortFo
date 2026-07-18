@@ -16,7 +16,7 @@ export function Footer() {
             </span>
           </div>
           <p className="mt-2 text-xs text-[--color-fg-subtle]">
-            © {year} · Construido con obsesión por la experiencia.
+            {year} · Construido con obsesión por la experiencia.
           </p>
         </div>
 

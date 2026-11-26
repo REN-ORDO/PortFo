@@ -9,7 +9,13 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { ArrowUpRight, Check, ChevronDown } from "lucide-react";
+import {
+  ArrowUpRight,
+  Check,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { GithubIcon } from "@/components/brand-icons";
 import { projects, type Project } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -40,10 +46,30 @@ const statusLabel: Record<Project["status"], string> = {
 
 export function Projects() {
   const [filter, setFilter] = useState<Filter>("todos");
-
   const filtered = useMemo(() => {
     if (filter === "todos") return projects;
     return projects.filter((p) => p.type === filter);
+  }, [filter]);
+  const scroller = useRef<HTMLDivElement>(null);
+  const total = filtered.length;
+  const [current, setCurrent] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+  const updateEdges = () => {
+    const el = scroller.current;
+    if (!el) return;
+    setAtStart(el.scrollLeft < 8);
+    const end = el.scrollLeft + el.clientWidth >= el.scrollWidth - 8;
+    setAtEnd(end);
+    const card = el.querySelector<HTMLElement>("[data-card]");
+    const pitch = card ? card.offsetWidth + 20 : 440;
+    setCurrent(end ? total - 1 : Math.round(el.scrollLeft / pitch));
+  };
+  const scrollByCard = (dir: 1 | -1) =>
+    scroller.current?.scrollBy({ left: dir * 440, behavior: "smooth" });
+
+  useEffect(() => {
+    updateEdges();
   }, [filter]);
 
   return (
@@ -82,20 +108,65 @@ export function Projects() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <FilterDropdown
-              value={filter}
-              onChange={setFilter}
-              options={filters}
-            />
+            <div className="flex items-center gap-5">
+              <div className="flex items-center gap-3 font-mono text-xs tracking-[0.2em] text-[--color-fg-subtle]">
+                <span className="text-[--color-fg]">
+                  {String(Math.min(current + 1, total)).padStart(2, "0")}
+                </span>
+                <span className="relative block h-px w-12 bg-[--color-border]">
+                  <span
+                    className="absolute inset-y-0 left-0 block bg-[--color-accent] transition-[width] duration-300"
+                    style={{
+                      width: `${total ? ((current + 1) / total) * 100 : 0}%`,
+                    }}
+                  />
+                </span>
+                <span>{String(total).padStart(2, "0")}</span>
+              </div>
+              <FilterDropdown
+                value={filter}
+                onChange={setFilter}
+                options={filters}
+              />
+            </div>
           </motion.div>
         </div>
 
-        <div className="mt-16 grid gap-5 md:grid-cols-2">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
-            ))}
-          </AnimatePresence>
+        <div className="relative mt-12">
+          {([-1, 1] as const).map((dir) => (
+            <button
+              key={dir}
+              type="button"
+              onClick={() => scrollByCard(dir)}
+              disabled={dir === -1 ? atStart : atEnd}
+              aria-label={dir === -1 ? "Proyectos anteriores" : "Proyectos siguientes"}
+              className={cn(
+                "absolute top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[--color-border-strong] bg-[--color-bg]/80 text-[--color-fg] backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-[--color-accent] hover:text-[--color-accent] disabled:pointer-events-none disabled:opacity-0 md:flex",
+                dir === -1 ? "-left-4" : "-right-4"
+              )}
+            >
+              {dir === -1 ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
+            </button>
+          ))}
+        <div
+          ref={scroller}
+          onScroll={updateEdges}
+          className="snap-x snap-mandatory overflow-x-auto py-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-56px),transparent)]"
+        >
+          <div className="flex items-stretch gap-5 px-5 pr-14">
+            <AnimatePresence mode="popLayout">
+              {filtered.map((project, i) => (
+                <div
+                  key={project.id}
+                  data-card
+                  className="flex w-[85vw] shrink-0 snap-start sm:w-[420px]"
+                >
+                  <ProjectCard project={project} index={i} />
+                </div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </div>
         </div>
 
         <motion.p
@@ -261,7 +332,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         transformPerspective: 1200,
         transformStyle: "preserve-3d",
       }}
-      className="group relative flex flex-col overflow-hidden rounded-3xl border border-[--color-border] bg-[--color-surface]/30 backdrop-blur-sm transition-[border-color,box-shadow] duration-500 hover:border-[--color-border-strong] will-change-transform"
+      className="group relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-3xl border border-[--color-border] bg-[--color-surface]/30 backdrop-blur-sm transition-[border-color,box-shadow] duration-500 hover:border-[--color-border-strong] will-change-transform"
     >
       <motion.div
         aria-hidden
@@ -287,9 +358,19 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         }}
       />
 
-      <div className="relative aspect-[16/10] overflow-hidden border-b border-[--color-border] bg-[--color-bg-elev]">
-        <ProjectVisual project={project} hovered={hovered} />
-      </div>
+      {project.icon ? (
+        <div className="relative aspect-[16/10] overflow-hidden border-b border-[--color-border] bg-[--color-bg-elev]">
+          <ProjectVisual project={project} hovered={hovered} />
+        </div>
+      ) : (
+        <div
+          aria-hidden
+          className="h-1 w-full"
+          style={{
+            background: `linear-gradient(90deg, ${accent}, transparent)`,
+          }}
+        />
+      )}
 
       <div className="relative flex flex-1 flex-col p-7" style={{ transform: "translateZ(20px)" }}>
         <div className="flex flex-wrap items-center gap-2 text-[10px] font-mono uppercase tracking-[0.15em]">
@@ -351,7 +432,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           ))}
         </div>
 
-        <details className="mt-6 group/details">
+        <div className="mt-auto pt-6">
+        <details className="group/details">
           <summary className="flex cursor-pointer items-center justify-between rounded-xl border border-[--color-border] bg-[--color-bg-elev]/40 px-4 py-3 text-xs font-medium text-[--color-fg-muted] transition-colors hover:bg-[--color-bg-elev] hover:text-[--color-fg] [&::-webkit-details-marker]:hidden">
             <span>Resultados clave</span>
             <span className="transition-transform duration-300 group-open/details:rotate-180">
@@ -406,6 +488,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                   : "Próximamente público"}
             </span>
           )}
+        </div>
         </div>
       </div>
     </motion.div>
@@ -471,7 +554,10 @@ function ProjectVisual({
                 alt={`${project.title} icon`}
                 width={400}
                 height={400}
-                className="max-h-full max-w-full object-contain"
+                className={cn(
+                  "max-h-full max-w-full object-contain",
+                  project.iconRounded && "rounded-[22%]"
+                )}
                 unoptimized={project.icon.endsWith(".svg")}
               />
             </div>
@@ -488,40 +574,7 @@ function ProjectVisual({
               </div>
             )}
           </motion.div>
-        ) : (
-          <motion.div
-            animate={
-              hovered
-                ? { rotate: 6, scale: 1.05, y: -4 }
-                : { rotate: 0, scale: 1, y: 0 }
-            }
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex flex-col gap-2 rounded-2xl border border-[--color-border-strong] bg-[--color-bg]/80 p-4 backdrop-blur-md shadow-2xl"
-            style={{ width: "70%", transform: "translateZ(40px)" }}
-          >
-            <div className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-[--color-fg-subtle]/40" />
-              <span className="h-2 w-2 rounded-full bg-[--color-fg-subtle]/40" />
-              <span className="h-2 w-2 rounded-full bg-[--color-fg-subtle]/40" />
-            </div>
-            <div className="space-y-1.5">
-              <div className="h-2 w-3/4 rounded-full bg-[--color-border-strong]" />
-              <div className="h-2 w-1/2 rounded-full bg-[--color-border]" />
-              <div
-                className="h-2 w-2/3 rounded-full"
-                style={{ background: `${accent}80` }}
-              />
-              <div className="h-2 w-2/5 rounded-full bg-[--color-border]" />
-            </div>
-            <div className="mt-1 flex gap-1.5">
-              <span
-                className="h-5 w-12 rounded-md"
-                style={{ background: `${accent}30` }}
-              />
-              <span className="h-5 w-10 rounded-md bg-[--color-border]" />
-            </div>
-          </motion.div>
-        )}
+        ) : null}
       </div>
 
       <div className="absolute bottom-3 left-3 right-3 flex justify-between text-[10px] font-mono uppercase tracking-[0.15em] text-[--color-fg-subtle]">

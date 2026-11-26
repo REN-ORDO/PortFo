@@ -12,7 +12,7 @@ export type Project = {
   repo?: string;
   icon?: string;
   iconSize?: "sm" | "md" | "lg";
-  wordmark?: { primary: string; secondary?: string };
+  iconRounded?: boolean;  wordmark?: { primary: string; secondary?: string };
   highlights: string[];
   accent: "mint" | "violet" | "warm" | "rose";
 };
@@ -26,7 +26,7 @@ export const projects: Project[] = [
     description:
       "Plataforma del fútbol amateur: torneos abiertos, gestión de equipos, estadísticas computadas, pagos vía Nequi, cromos generativos con IA (DerbiCard) y bot de WhatsApp que sincroniza la comunidad. Arquitectura híbrida Supabase + Firebase con bridges seguros entre ambos.",
     type: "empresa",
-    role: "Full Stack Developer",
+    role: "Desarrollador principal · ~95% del producto",
     stack: [
       "Next.js 16",
       "React 19",
@@ -35,20 +35,43 @@ export const projects: Project[] = [
       "Firebase",
       "Tailwind",
       "Framer Motion",
+      "Gemini",
+      "Vitest",
       "Playwright",
       "WhatsApp Cloud API",
-      "OpenAI",
     ],
     status: "produccion",
     year: "2026",
     link: "https://derbiplay.com",
     highlights: [
-      "Pico de usuarios durante el debut del Vintage Cup",
-      "~1015 tests automatizados pasando (Vitest + Playwright + Firebase Emulator)",
-      "Bot de WhatsApp + cromos generativos con IA integrados al flujo",
-      "Server Actions + RLS + RPCs transaccionales para flujos críticos",
+      "4.000+ jugadores, 469 equipos, 35 torneos, ~1.700 partidos y 9.485 goles",
+      "Arquitectura híbrida Supabase/Firebase: identidad compartida con custom tokens, migración idempotente de equipos y tiempo real para planilleros",
+      "~1.015 tests automatizados, RLS y RPCs transaccionales",
+      "Cromos con Gemini, bot de WhatsApp e integración con Meta",
     ],
     accent: "mint",
+  },
+  {
+    id: "semillero",
+    title: "Semillero de Cooweb",
+    icon: "/icon-semillero.png",
+    iconSize: "md",
+    iconRounded: true,
+    tagline: "Programa de formación con diagnóstico por IA",
+    description:
+      "Sitio público del semillero de Cooweb: postulaciones, diagnóstico empresarial con Gemini y módulo administrativo de correos. Principal contribuidor del repositorio en un equipo de cuatro.",
+    type: "empresa",
+    role: "Full Stack Developer",
+    stack: ["Next.js", "Firestore", "Vertex AI", "Nodemailer"],
+    status: "produccion",
+    year: "2026",
+    link: "https://semillero.cooweb.co",
+    highlights: [
+      "126 commits: principal contribuidor en un equipo de cuatro",
+      "Diagnóstico empresarial con Gemini sobre Vertex AI",
+      "Módulo administrativo de correos y flujo de postulaciones",
+    ],
+    accent: "violet",
   },
   {
     id: "vecinos",
@@ -58,7 +81,7 @@ export const projects: Project[] = [
     description:
       "Plataforma de gestión residencial (SaaS multi-tenant) desarrollada dentro de Cooweb.co. Módulos de portería con QR y escaneo de paquetes vía IA, gestión de incidencias/PQRS, comunicación con la comunidad y asistente de IA (Gemini) para normativa y clasificación automática de casos.",
     type: "empresa",
-    role: "Tech Lead",
+    role: "Full Stack Developer",
     stack: [
       "Next.js 14",
       "React 18",
@@ -73,7 +96,6 @@ export const projects: Project[] = [
     year: "2026",
     link: "https://vecinos.club",
     highlights: [
-      "Rol de Tech Lead liderando un equipo de desarrolladores junto a un compañero par",
       "Módulos de portería (QR + escaneo de paquetes con IA)",
       "Asistente de IA (Gemini) para normativa y clasificación automática de casos",
       "CI/CD con Google Cloud Build hacia Cloud Run, contenedores Docker",
@@ -113,10 +135,29 @@ export const projects: Project[] = [
     accent: "violet",
   },
   {
-    id: "avanzo",
-    title: "Avanzo Créditos",
-    icon: "/icon-avanzo.png",
-    wordmark: { primary: "Avanzo", secondary: "Créditos" },
+    id: "saldo",
+    title: "Saldo",
+    icon: "/icon-saldo.png",
+    iconSize: "md",
+    iconRounded: true,
+    tagline: "Finanzas personales local-first para iOS",
+    description:
+      "App iOS de finanzas sin backend: los datos viven en el dispositivo, con captura mediante Shortcuts y URL scheme. Compilada desde Windows/WSL2 con xtool. Arquitectura feature-first, persistencia versionada y exportación a CSV.",
+    type: "personal",
+    role: "Desarrollo individual",
+    stack: ["Swift 6", "SwiftUI", "WSL2", "xtool"],
+    status: "en-desarrollo",
+    year: "2026",
+    highlights: [
+      "~12.200 líneas de Swift y 336 tests",
+      "57 decisiones de arquitectura documentadas",
+      "Local-first: sin backend, captura vía Shortcuts y URL scheme",
+    ],
+    accent: "mint",
+  },
+  {
+    id: "creditos",
+    title: "Plataforma de créditos",
     tagline: "QA manual sobre 4 entornos",
     description:
       "QA sobre 4 entornos (DEV · QA · REG · PROD) con filosofía manual-first. Tracker HTML custom con persistencia localStorage, smoke script Python stdlib para health-check pre-test, y reportes ejecutivos go/no-go con evidencia para stakeholders.",
@@ -132,7 +173,6 @@ export const projects: Project[] = [
     ],
     status: "rol-concluido",
     year: "2026",
-    link: "https://avanzo.co/",
     highlights: [
       "Tracker HTML propio con persistencia local + export JSON",
       "Smoke script Python sin dependencias para validar env pre-test",
@@ -141,8 +181,8 @@ export const projects: Project[] = [
     accent: "warm",
   },
   {
-    id: "cava",
-    title: "Cava",
+    id: "produccion",
+    title: "Producto en producción",
     tagline: "Cobertura de calidad en producto live",
     description:
       "QA manual sobre producto en producción. Recorridos happy path + edge cases, documentación inline, tickets accionables con reproducción y severidad. Tooling propio portable que sobrevive cualquier handoff.",
@@ -211,7 +251,7 @@ export const projects: Project[] = [
       "Anthropic Claude API",
       "Vercel",
     ],
-    status: "en-desarrollo",
+    status: "archivado",
     year: "2026",
     highlights: [
       "Scraping multi-fuente con Playwright + fetch directo",
@@ -231,11 +271,10 @@ export const skills: Skill[] = [
   {
     category: "AI Engineering",
     items: [
-      "LLMs (Claude, Gemini)",
-      "RAG",
-      "Agentes con Anthropic SDK",
-      "Prompt engineering",
-      "Gestión de contexto y bases de conocimiento para multi-agentes",
+      "Gemini · Vertex AI",
+      "Whisper",
+      "Claude · OpenAI",
+      "Anthropic SDK",
     ],
   },
   {
@@ -253,8 +292,9 @@ export const skills: Skill[] = [
     items: [
       "Node.js",
       "Supabase",
-      "Firebase",
+      "Firebase · Firestore",
       "REST APIs",
+      "Redis · BullMQ",
     ],
   },
   {
@@ -268,7 +308,7 @@ export const skills: Skill[] = [
   },
   {
     category: "Mobile",
-    items: ["React Native (en práctica)"],
+    items: ["Swift · SwiftUI", "React Native · Expo"],
   },
   {
     category: "Cloud & DevOps",
@@ -277,13 +317,6 @@ export const skills: Skill[] = [
       "Google Cloud Run",
       "Cloud Build (CI/CD)",
       "Artifact Registry",
-    ],
-  },
-  {
-    category: "Liderazgo",
-    items: [
-      "Tech Lead / gestión de producto",
-      "Coordinación de equipos de desarrollo",
     ],
   },
 ];
@@ -300,30 +333,17 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
-    role: "Tech Lead · Proyecto VecinOS",
-    company: "Cooweb.co",
-    companyLogo: "/logo-cooweb.png",
-    companyLink: "https://cooweb.co",
-    period: "Jun 2026 — presente",
-    description:
-      "Lidero, junto a un compañero par, a un equipo de desarrolladores en la construcción de VecinOS, plataforma de gestión residencial.",
-    achievements: [
-      "Dirección técnica de un equipo de desarrolladores",
-      "Arquitectura full stack: Next.js 14, Firebase, Redis",
-      "IA con Gemini para normativa y auto-asignación de incidencias",
-      "Infraestructura en Google Cloud: Docker, Cloud Run, Cloud Build",
-    ],
-  },
-  {
     role: "Full Stack Developer",
     company: "Cooweb.co",
     companyLogo: "/logo-cooweb.png",
     companyLink: "https://cooweb.co",
     period: "Dic 2025 — presente",
-    description: "Desarrollo full stack en múltiples productos de la empresa.",
+    description:
+      "Desarrollo funcionalidades end-to-end para DerbiPlay, DailyHumano, VecinOS y Semillero, con despliegues en Docker y Cloud Run.",
     achievements: [
-      "DerbiPlay: plataforma de fútbol amateur en producción",
-      "DailyHumano: PWA con IA conversacional y voz",
+      "Integro Gemini y Whisper en flujos de diagnóstico, clasificación de incidencias, generación de cromos y transcripción de voz",
+      "Pruebas automatizadas con Vitest y Playwright",
+      "Flujos de desarrollo agéntico con Claude Code y OpenCode",
     ],
   },
   {
@@ -333,10 +353,11 @@ export const experiences: Experience[] = [
     companyLink: "https://cooweb.co",
     period: "Dic 2025 — Jul 2026",
     description:
-      "QA manual sobre productos en producción; cerré el ciclo capacitando a mi reemplazo antes de transicionar a desarrollo.",
+      "Validé productos en producción y flujos financieros en cuatro entornos (DEV, QA, REG y PROD).",
     achievements: [
-      "Avanzo Créditos: QA manual sobre 4 entornos con tooling propio",
-      "Cava: cobertura de calidad sobre producto en producción",
+      "Tracker y scripts de smoke testing propios",
+      "Cobertura de escenarios críticos, happy paths y edge cases",
+      "Capacité a mi reemplazo antes de pasar a desarrollo",
     ],
   },
 ];
@@ -349,6 +370,24 @@ export type Certification = {
 };
 
 export const certifications: Certification[] = [
+  {
+    title: "Mentor · NASA Space Apps Challenge Barranquilla 2026",
+    issuer: "CUC, Universidad de la Costa",
+    date: "Nov 2026",
+    detail: "mentoría a equipos durante el hackathon",
+  },
+  {
+    title: "Mentor voluntario · Eco Hack / EcoFest",
+    issuer: "Comunidad",
+    date: "Oct 2026",
+    detail: "mentoría a equipos participantes",
+  },
+  {
+    title: "Organizador y mentor · Bootcamp Semillero",
+    issuer: "Cooweb",
+    date: "Oct 2026",
+    detail: "~12 personas capacitadas",
+  },
   {
     title: "Hackatón Barranqui-IA 2026 (3ª edición) — Build with AI",
     issuer: "Google Developer Groups Barranquilla",
@@ -363,16 +402,27 @@ export const certifications: Certification[] = [
   },
 ];
 
+export const education: { title: string; detail: string }[] = [
+  {
+    title: "Ingeniería de Sistemas · UAC",
+    detail: "4.º semestre · En curso",
+  },
+  { title: "Fundamentos UI/UX", detail: "Platzi" },
+  { title: "Español", detail: "Nativo" },
+  { title: "Inglés", detail: "Intermedio (lectura técnica)" },
+];
+
 export type Stat = {
   number: string;
   label: string;
 };
 
 export const stats: Stat[] = [
-  { number: "6+ meses", label: "Experiencia profesional" },
-  { number: "3", label: "Proyectos en producción activos" },
-  { number: "4", label: "Disciplinas: AI · Frontend · Cloud · Liderazgo" },
-  { number: "0", label: "Bugs críticos en producción" },
+  { number: "1 año", label: "Experiencia profesional" },
+  { number: "4.000+", label: "Jugadores en DerbiPlay" },
+  { number: "~1.015", label: "Tests automatizados" },
+  { number: "35", label: "Torneos abiertos" },
+  { number: "~12", label: "Personas capacitadas" },
 ];
 
 export type NavItem = {

@@ -12,10 +12,8 @@ const items = [
   "Animaciones",
   "Testing",
   "LLMs",
-  "RAG",
   "TypeScript",
   "Next.js",
-  "Tech Lead",
   "Cloud & DevOps",
   "React Native",
 ];

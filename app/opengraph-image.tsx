@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Sebastian Ordoñez · Full Stack Developer & Tech Lead";
+export const alt = "Sebastian Ordoñez · Full Stack Developer · AI";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -94,9 +94,7 @@ export default function OpengraphImage() {
           >
             <span>Full Stack Developer</span>
             <span style={{ color: "#6e6e7a" }}>·</span>
-            <span>Tech Lead</span>
-            <span style={{ color: "#6e6e7a" }}>·</span>
-            <span>AI Engineer</span>
+            <span>AI</span>
           </div>
         </div>
       </div>

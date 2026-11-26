@@ -40,7 +40,7 @@ const pillars: Pillar[] = [
     bullets: [
       "Next.js 16 + React 19",
       "Tailwind v4 + Radix + shadcn",
-      "Framer Motion + GSAP con propósito",
+      "Framer Motion + PWA",
     ],
     icon: <Code2 size={20} />,
     accent: "var(--color-accent-2)",
@@ -50,11 +50,11 @@ const pillars: Pillar[] = [
     label: "03 · Quality Engineering",
     title: "Si no se prueba, no existe.",
     description:
-      "QA manual sobre 4 entornos con tooling propio: tracker HTML con persistencia local, smoke scripts en Python stdlib, reportes go/no-go accionables. Y automation (Playwright + Vitest) cuando el flujo lo justifica.",
+      "Vengo de QA: validé productos y flujos financieros en cuatro entornos (DEV, QA, REG y PROD) con tracker y scripts de smoke testing propios. Hoy automatizo con Vitest y Playwright.",
     bullets: [
-      "Tracker HTML + smoke scripts propios",
-      "Playwright + Vitest cuando aplica",
-      "Reportes accionables para stakeholders",
+      "Tracker y smoke testing propios",
+      "Vitest + Playwright",
+      "~1.015 tests automatizados en DerbiPlay",
     ],
     icon: <ShieldCheck size={20} />,
     accent: "var(--color-accent-warm)",
@@ -89,9 +89,9 @@ export function About() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mt-6 max-w-2xl text-lg leading-relaxed text-[--color-fg-muted]"
         >
-          Mi trabajo vive en la intersección de la inteligencia artificial,
-          el diseño de interfaces y la garantía de calidad. No me interesa
-          ser experto en uno: me obsesiona orquestar los tres para crear
+          Construyo productos de punta a punta, integro IA en producción y
+          diseño soluciones mantenibles, con una base en QA y automatización
+          de pruebas. Me interesa orquestar los tres frentes para crear
           productos que se sientan bien usar.
         </motion.p>
 
@@ -160,7 +160,7 @@ export function About() {
             lift={0}
             className="overflow-hidden rounded-3xl border border-[--color-border] bg-[--color-border]"
           >
-            <div className="grid h-full w-full gap-px md:grid-cols-4">
+            <div className="grid h-full w-full gap-px md:grid-cols-5">
               {stats.map((s) => (
                 <Stat key={s.label} number={s.number} label={s.label} />
               ))}

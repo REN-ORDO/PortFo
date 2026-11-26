@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { certifications, experiences, skills } from "@/lib/data";
+import { certifications, education, experiences, skills } from "@/lib/data";
 import { TiltCard } from "@/components/tilt-card";
 
 const skillAccents = [
@@ -112,29 +112,6 @@ export function Experience() {
                 </motion.li>
               ))}
             </ol>
-
-            <h3 className="mt-16 text-xs font-mono uppercase tracking-[0.2em] text-[--color-fg-subtle]">
-              Certificaciones & Hackathons
-            </h3>
-            <ul className="mt-8 flex flex-col gap-4">
-              {certifications.map((cert) => (
-                <li key={cert.title}>
-                  <TiltCard
-                    accent="var(--color-accent-2)"
-                    lift={4}
-                    intensity="low"
-                    className="rounded-2xl border border-[--color-border] bg-[--color-surface]/30 p-5 backdrop-blur-sm transition-[border-color] duration-500 hover:border-[--color-border-strong]"
-                  >
-                    <p className="text-sm font-semibold tracking-tight">
-                      {cert.title}
-                    </p>
-                    <p className="mt-1 text-xs text-[--color-fg-muted]">
-                      {cert.issuer} · {cert.date} — {cert.detail}
-                    </p>
-                  </TiltCard>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div>
@@ -204,6 +181,68 @@ export function Experience() {
               })}
             </div>
           </div>
+        </div>
+
+        <div className="mt-24 grid gap-5 lg:grid-cols-[1.2fr_1fr]">
+          <TiltCard
+            accent="var(--color-accent-2)"
+            lift={4}
+            intensity="low"
+            className="rounded-3xl border border-[--color-border] bg-[--color-surface]/30 p-8 backdrop-blur-sm transition-[border-color] duration-500 hover:border-[--color-border-strong]"
+          >
+            <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-[--color-fg-subtle]">
+              Hackathons y comunidad
+            </h3>
+            <ul className="mt-8 flex flex-col">
+              {certifications.map((cert) => (
+                <li
+                  key={cert.title}
+                  className="grid grid-cols-[88px_1fr] gap-5 pb-7 last:pb-0"
+                >
+                  <span className="pt-0.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[--color-accent-2]">
+                    {cert.date}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold tracking-tight">
+                      {cert.title}
+                    </p>
+                    <p className="mt-1 text-xs text-[--color-fg-muted]">
+                      {cert.issuer} · {cert.detail}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </TiltCard>
+
+          <TiltCard
+            accent="var(--color-accent)"
+            lift={4}
+            intensity="low"
+            className="rounded-3xl border border-[--color-border] bg-[--color-surface]/30 p-8 backdrop-blur-sm transition-[border-color] duration-500 hover:border-[--color-border-strong]"
+          >
+            <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-[--color-fg-subtle]">
+              Formación
+            </h3>
+            <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-[--color-accent]">
+              {education[0].detail}
+            </p>
+            <p className="mt-2 text-xl font-semibold tracking-tight">
+              {education[0].title}
+            </p>
+            <ul className="mt-6 flex flex-wrap gap-2 border-t border-[--color-border] pt-6">
+              {education.slice(1).map((item) => (
+                <li
+                  key={item.title}
+                  className="rounded-full border border-[--color-border] bg-[--color-bg-elev]/60 px-3 py-1.5 text-xs text-[--color-fg-muted]"
+                >
+                  <span className="text-[--color-fg]">{item.title}</span>
+                  {" · "}
+                  {item.detail}
+                </li>
+              ))}
+            </ul>
+          </TiltCard>
         </div>
       </div>
     </section>

@@ -5,10 +5,10 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 
 const roles = [
-  { label: "Full Stack Developer", color: "var(--color-accent)" },
-  { label: "Tech Lead", color: "var(--color-accent-2)" },
-  { label: "AI Engineer", color: "var(--color-accent-warm)" },
-  { label: "Cloud & DevOps", color: "var(--color-accent-rose)" },
+  { label: "productos reales", color: "var(--color-accent)" },
+  { label: "plataformas web", color: "var(--color-accent-2)" },
+  { label: "soluciones con IA", color: "var(--color-accent-warm)" },
+  { label: "software mantenible", color: "var(--color-accent-rose)" },
 ];
 
 function RoleRotator() {
@@ -118,7 +118,6 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-2 text-balance text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-8xl lg:text-[9rem]"
         >
-          experiencias{" "}
           <RoleRotator />
         </motion.div>
 
@@ -128,12 +127,13 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.7 }}
           className="mt-10 max-w-2xl text-lg leading-relaxed text-[--color-fg-muted] sm:text-xl"
         >
-          Llevo <span className="text-[--color-fg]">6+ meses</span> construyendo
-          productos reales en <span className="text-[--color-fg]">Cooweb.co</span>,
-          y desde hace un mes lidero como Tech Lead un equipo de desarrolladores
-          en VecinOS. Me muevo entre Full Stack, IA e infraestructura cloud
-          según lo que pida el equipo. Me obsesiona que cada pixel y cada
-          interacción tengan intención — si el usuario duda, fallé.
+          Desarrollador Full Stack con{" "}
+          <span className="text-[--color-fg]">1 año</span> en{" "}
+          <span className="text-[--color-fg]">Cooweb.co</span> construyendo
+          productos de punta a punta, integrando IA en producción y diseñando
+          soluciones mantenibles. Combino Next.js, TypeScript, Node.js,
+          Supabase y Firebase con una base en QA, automatización de pruebas y
+          despliegue en Google Cloud.
         </motion.p>
 
         <motion.div

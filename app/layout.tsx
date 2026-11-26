@@ -23,13 +23,12 @@ const display = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Sebastian Ordoñez — Full Stack Developer & Tech Lead",
+  title: "Sebastian Ordoñez — Full Stack Developer · AI",
   description:
-    "Portfolio de Sebastian Ordoñez. Full Stack Developer, Tech Lead y AI Engineer. Construyo experiencias digitales con foco obsesivo en UX y calidad.",
+    "Portfolio de Sebastian Ordoñez. Full Stack Developer enfocado en construir productos de punta a punta, integrar IA en producción y diseñar soluciones mantenibles.",
   keywords: [
     "Full Stack",
-    "Tech Lead",
-    "AI Engineer",
+    "AI",
     "Frontend",
     "Cloud & DevOps",
     "Portfolio",
@@ -39,9 +38,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Sebastian Ordoñez" }],
   openGraph: {
-    title: "Sebastian Ordoñez — Full Stack Developer & Tech Lead",
+    title: "Sebastian Ordoñez — Full Stack Developer · AI",
     description:
-      "Full Stack Developer, Tech Lead y AI Engineer. Construyo experiencias digitales con foco en UX y calidad.",
+      "Full Stack Developer enfocado en construir productos de punta a punta, integrar IA en producción y diseñar soluciones mantenibles.",
     locale: "es_ES",
     type: "website",
   },

@@ -273,7 +273,8 @@ export const skills: Skill[] = [
     items: [
       "Gemini · Vertex AI",
       "Whisper",
-      "Claude · OpenAI",
+      "Claude",
+      "OpenAI",
       "Anthropic SDK",
     ],
   },
